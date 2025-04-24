@@ -1,0 +1,23 @@
+configuration {
+	modes: "window,drun,run,ssh";
+	font: "FiraCode Nerd Font, Retina 12";
+	click-to-exit: true;
+	steal-focus: true;
+	terminal: "kitty";
+	kb-primary-paste: "Control+V,Shift+Insert";
+	kb-clear-line: "Control+w";
+	kb-mode-next: "Shift+Right,Control+Tab";
+	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
+	kb-mode-complete: "Control+l";
+	kb-cancel: "Escape,Control+g,Control+bracketleft";
+  timeout {
+      action: "kb-cancel";
+      delay:  15;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+
+@theme "moria"

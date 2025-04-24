@@ -1,0 +1,26 @@
+* {
+  background-color: rgba(39, 81, 77, 0.4);
+  color: #b1a984;
+}
+
+window {
+  border: 2;
+  border-color: #b1a984;
+  border-radius: 10;
+  location: center;
+  width: 600;
+}
+
+mainbox {
+  border-radius: 10;
+  padding: 1;
+}
+
+selected {
+  background-color: rgba(177, 169, 132, 0.4);
+  color: #27514d;
+}
+
+inputbar {
+  prompt: "Search";
+}

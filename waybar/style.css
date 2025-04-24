@@ -1,0 +1,75 @@
+* { 
+  background: transparent;
+  border-radius: 10px;
+  color: #529692;
+  font-family: 'FiraCode Nerd Font, Retina';
+  font-size: 12px;
+}
+
+#battery,
+#mpd,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#clock,
+#power-profiles-daemon,
+#workspaces,
+#custom-power,
+#tray
+{
+  background: rgba(0, 0, 0, 0.4);
+  border: solid 2px #529692;
+  padding: 1px 8px;
+}
+
+#clock {
+  border-color: #d9cda9;
+  color: #d9cda9;
+}
+
+#network {
+  border: solid 2px #529692;
+  color: #529692;
+  padding-right: 15px;
+}
+
+#power-profiles-daemon {
+  border: solid 2px #6a834a;
+  color: #6a834a;
+  padding-right: 10px;
+}
+
+#custom-power {
+  border-color: #a66742;
+  color: #a66742;
+  padding-right: 10px;
+}
+
+#battery.warning:not(.charging) {
+  border-color: #c08f26;
+  color: #c08f26;
+}
+
+#workspaces button {
+  border-radius: 0;
+  font-weight: normal;
+  padding: 0px;
+}
+
+#workspaces button:hover {
+  border: 0;
+  border-bottom: solid 1px #529692;
+  padding: 0;
+}
+
+#custom-power.menu {
+  background: #fff;
+}
+
+tooltip {
+  background: rgba(0, 0, 0, 0.8);
+  border: solid 2px #529692;
+}
