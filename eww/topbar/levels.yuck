@@ -1,0 +1,20 @@
+(defwidget levels-widget []
+  (box :class "container" :orientation "h" :space-evenly false :spacing 4 :halign "center"
+    ;; rolar o mouse ajusta, clicar abre o painel
+    (eventbox 
+              :onscroll "[ {} = up ] && wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ || wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      (box :class "metric-item" :space-evenly false :spacing 4
+        (label :class "level-icon"
+               :text {volume.muted ? "" : volume.level > 50 ? "" : ""})
+        (label :text "${volume.level}%")))
+    (eventbox 
+              :onscroll "[ {} = up ] && scripts/brightness.sh up || scripts/brightness.sh down"
+      (box :class "metric-item" :space-evenly false :spacing 4
+        (label :class "level-icon" :text "")
+        (label :text "${brightness}%")))))
+
+(defwindow levels
+  :monitor 0
+  :geometry (geometry :x "5.5%" :y "10px" :width "9%" :height "30px" :anchor "top right")
+  :reserve (struts :distance "10px" :side "top")
+  (levels-widget))

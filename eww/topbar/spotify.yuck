@@ -1,0 +1,23 @@
+(deflisten spotify :initial '{"status":"Stopped","title":"","artist":"","art":""}' "sh scripts/spotify/spotify.sh")
+(deflisten spotify-text :initial "" "sh scripts/spotify/marquee.sh 31 0.25")
+
+(defwidget spotify-widget []
+  (box :class "container spotify" :visible {spotify.status != "Stopped"}
+       :orientation "h" :space-evenly false :spacing 8 :hexpand true
+    (box :class "spotify-art" :visible {spotify.art != ""}
+         :style "background-image: url('${spotify.art}');")
+    (label :class "spotify-icon" :text "")
+    (box :class "spotify-text-box" :hexpand true
+      (label :class "spotify-text" :xalign 0 :hexpand true :limit-width 31
+             :text spotify-text))
+    (box :class "spotify-controls" :space-evenly false :spacing 10 :halign "end"
+      (button :onclick "playerctl -p spotify previous" "")
+      (button :onclick "playerctl -p spotify play-pause"
+        {spotify.status == "Playing" ? "" : ""})
+      (button :onclick "playerctl -p spotify next" ""))))
+
+(defwindow spotify
+  :monitor 0
+  :geometry (geometry :x "6%" :y "10px" :width "350px" :height "30px" :anchor "top left")
+  :reserve (struts :distance "10px" :side "top")
+  (spotify-widget))

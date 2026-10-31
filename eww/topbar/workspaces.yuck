@@ -1,0 +1,23 @@
+(deflisten workspaces :initial "[]" "hyprland-workspaces ALL")
+
+;;Workspaces
+(defwidget workspace-widget []
+  (box :class "container-workspaces container" :orientation "h" :space-evenly true 
+    (for workspace in workspaces
+      (button :onclick "hyprctl dispatch workspace ${workspace.id}"
+              :class "workspace-btn ${workspace.active ? 'active' : ''}"
+        {workspace.active ? "" : ""}))))
+
+(defwindow workspaces
+  :monitor 0
+  :geometry (geometry 
+        :x "10px" 
+        :y "10px" 
+        :width "5%" 
+        :height "30px" 
+        :anchor "top left"
+    )
+  :reserve (struts :distance "10px" :side "top")
+  (workspace-widget))
+
+

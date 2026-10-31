@@ -1,0 +1,149 @@
+/* atrium-sage.css — custom Atrium greeter theme
+ *
+ * Primary   #B2D3A8 (sage)       — all text, focus, button backgrounds
+ * Secondary #274B40 (deep green) — button text, input background
+ * Container #1A322B (secondary, darkened) at 85% opacity
+ *
+ * Atrium appends this file after its built-in CSS, so redefining the
+ * atrium-* palette below recolors every widget that uses it. The rules
+ * further down use Atrium's own selectors (.user-button, .password-field…)
+ * so they win over the defaults.
+ *
+ * Base font size is set in /etc/atrium-greeter.conf (base-font-size = 12).
+ */
+
+/* ---- Palette -------------------------------------------------------- */
+@define-color sage-primary          #B2D3A8;
+@define-color sage-primary-hover    #C8E2BF;
+@define-color sage-secondary        #274B40;
+@define-color sage-container        #1A322B;
+
+@define-color atrium-bg             @sage-container;
+@define-color atrium-card           @sage-container;
+@define-color atrium-text           @sage-primary;    /* all text, incl. typed password */
+@define-color atrium-border         alpha(@sage-primary, 0.35);
+@define-color atrium-accent         @sage-primary;    /* buttons, focus ring, focused input */
+@define-color atrium-accent-hover   @sage-primary-hover;
+@define-color atrium-accent-fg      @sage-secondary;  /* text on buttons */
+@define-color atrium-subtle         alpha(@sage-primary, 0.6);
+@define-color atrium-error          #F2A7A0;
+@define-color atrium-dropdown       @sage-primary;
+@define-color atrium-dropdown-hover @sage-primary-hover;
+@define-color atrium-dropdown-fg    @sage-secondary;
+
+/* ---- Font ------------------------------------------------------------ */
+window, tooltip, popover {
+  font-family: "SF Pro Display", "SF Pro Text", "SF Pro", sans-serif;
+  color: @sage-primary;
+}
+
+/* ---- Main container -------------------------------------------------- */
+.card {
+  background-color: alpha(@sage-container, 0.85);
+  border: 1px solid alpha(@sage-primary, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px alpha(black, 0.35);
+}
+
+.heading,
+.session-row > label,
+.power-confirm-label {
+  color: @sage-primary;
+}
+
+/* ---- Buttons: profile selection + login confirm, identical ------------ */
+.user-button,
+button.suggested-action {
+  background-image: none;
+  background-color: @sage-primary;
+  color: @sage-secondary;
+  border: none;
+  box-shadow: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-button label,
+button.suggested-action label {
+  color: @sage-secondary;
+}
+
+.user-button:hover,
+button.suggested-action:hover {
+  background-image: none;
+  background-color: @sage-primary-hover;
+  box-shadow: none;
+}
+
+.user-button:active,
+button.suggested-action:active {
+  background-color: shade(@sage-primary, 0.9);
+}
+
+/* Keyboard focus ring */
+.user-button:focus-visible,
+button.suggested-action:focus-visible,
+.back-button:focus-visible,
+menubutton.power-button > button:focus-visible,
+.power-confirm-button:focus-visible,
+dropdown.session-dropdown > button:focus-visible,
+dropdown.session-dropdown > popover listview > row:focus-visible {
+  outline: 2px solid @sage-primary;
+  outline-offset: 2px;
+}
+
+/* Back arrow on the password page */
+.back-button {
+  color: @sage-primary;
+}
+
+.back-button:hover {
+  background-color: alpha(@sage-primary, 0.15);
+}
+
+/* ---- Password input --------------------------------------------------- */
+.password-field > text {
+  background-color: alpha(@sage-secondary, 0.6);
+  color: @sage-primary;           /* typed characters / dots */
+  caret-color: @sage-primary;
+  border: 1px solid alpha(@sage-primary, 0.35);
+  border-radius: 10px;
+}
+
+.password-field > text > placeholder {
+  color: alpha(@sage-primary, 0.6);
+}
+
+.password-field > text:focus,
+.password-field:focus-within > text {
+  border: 2px solid @sage-primary;
+  outline: none;
+}
+
+.password-field > text > selection {
+  background-color: alpha(@sage-primary, 0.35);
+  color: @sage-primary;
+}
+
+/* ---- Session dropdown: same look as the buttons ----------------------- */
+dropdown.session-dropdown > button {
+  background-color: @sage-primary;
+  color: @sage-secondary;
+  border: none;
+}
+
+dropdown.session-dropdown > button label,
+dropdown.session-dropdown > button arrow {
+  color: @sage-secondary;
+}
+
+/* ---- Power buttons and tooltips --------------------------------------- */
+menubutton.power-button > button {
+  color: @sage-primary;
+}
+
+tooltip.background {
+  color: @sage-primary;
+}

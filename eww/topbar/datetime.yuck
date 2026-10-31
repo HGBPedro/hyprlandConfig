@@ -1,0 +1,26 @@
+(defpoll time :interval "1s" `date +%H:%M:%S`)
+(defpoll date :interval "1s" `date +%d/%m/%y`)
+
+;; DateTime
+(defwidget datetime []
+    (box :class "container"
+        (box :class "clockbox" :orientation "h" :spacing 15 :valign "center" :halign "center" :space-evenly "true" :vexpand "false" :hexpand "false"
+            (eventbox :onclick "eww close --config ~/.config/eww/topbar control-center; eww close --config ~/.config/eww/topbar calendar-window" :cursor "pointer"
+				        (label :class "date" :halign "end" :wrap "true"  :text date))
+            (eventbox :onclick "eww close --config ~/.config/eww/topbar calendar-window; eww open --config ~/.config/eww/topbar --toggle control-center" :cursor "pointer"
+				        (label :class "time" :halign "start" :wrap "true" :text time)
+        )))
+)
+
+  (defwindow datetime
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "10px"
+                               :width "10%"
+                               :height "30px"
+                               :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "10px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+  (datetime))

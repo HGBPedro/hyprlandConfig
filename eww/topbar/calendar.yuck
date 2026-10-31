@@ -1,0 +1,12 @@
+(defvar cal-open false)
+
+(defwidget calendar-popup []
+  (revealer :reveal cal-open :transition "slidedown" :duration "200ms"
+    (box :class "container calendar-popup"
+      (calendar :class "cal" :show-week-numbers false))))
+
+(defwindow calendar-window
+  :monitor 0
+  :geometry (geometry :x "0px" :y "50px" :anchor "top center")
+  :stacking "overlay"
+  (calendar-popup))

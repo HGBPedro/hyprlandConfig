@@ -1,0 +1,60 @@
+//primary-color: #B2D3A8;
+//$secondary-color: #273B40;
+
+* {
+  background-color: #273b40;
+  color: #B2D3A8;
+}
+
+window {
+    fullscreen: true;
+    background-color: #00000055;   /* véu escuro sobre a tela borrada */
+    padding: 25% 32%;              /* empurra o menu pro centro; ajuste ao gosto */
+}
+
+mainbox {
+    background-color: #273B40;   /* a "caixa" do modal */
+    border-radius: 3px;
+}
+
+window {
+  border: 2;
+  //border-color: #B2D3A8;
+  border-radius: 3;
+  location: center;
+  width: 600;
+}
+
+mainbox {
+  border-radius: 3;
+}
+
+element {
+    padding: 6px 24px;        /* o recuo do texto agora fica aqui dentro */
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: #B2D3A8;   /* a cor do destaque */
+    text-color: #273B40;
+}
+
+element-text, element-icon {
+    background-color: transparent;
+    text-color: inherit;          /* herda a cor do element, inclusive no selecionado */
+}
+
+selected {
+  background-color: #B2D3A8;
+  border-radius: 1;
+  color: #273B40;
+  margin: 4;
+}
+
+inputbar {
+  padding: 5 8;
+}
+
+prompt {
+  placeholder: "Search";
+}

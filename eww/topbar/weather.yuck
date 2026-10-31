@@ -1,0 +1,18 @@
+(defpoll weather :interval "5m" `sh scripts/weather/oweatherbar.sh`)
+(defpoll weather-icon :interval "302s" `sh scripts/weather/icon.sh`)
+
+(defwidget weather-widget []
+    (box :class "container" :orientation "h" :space-evenly "true" :spacing 2 :halign "center"
+        (box :class "weatherbox" :orientation "h" :spacing 1 :valign "center" :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
+            (label :class "weathertemp" :halign "center" :wrap "false" :text weather)
+            (label :class "weather-icon" :halign "center" :wrap "false" :text weather-icon)
+    )))
+
+(defwindow weather
+    :monitor 0
+    :geometry (geometry :x "11.2%" :y "10px" :width "10%" :height "30px" :anchor "top right")
+    :reserve (struts :distance "10px" :side "top")
+    :window-type "dock"
+    :wm-ignore false
+    (weather-widget))
+

@@ -5,3 +5,6 @@
 - hyprpaper
 - rofi
 - ttf-firacode-nerd
+- apple-fonts
+- eww
+- atrium

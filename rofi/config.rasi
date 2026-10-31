@@ -1,6 +1,6 @@
 configuration {
 	modes: "window,drun,run,ssh";
-	font: "FiraCode Nerd Font, Retina 12";
+	font: "SF Pro 12";
 	click-to-exit: true;
 	steal-focus: true;
 	terminal: "kitty";
@@ -12,7 +12,7 @@ configuration {
 	kb-cancel: "Escape,Control+g,Control+bracketleft";
   timeout {
       action: "kb-cancel";
-      delay:  15;
+      delay:  5;
   }
   filebrowser {
       directories-first: true;
@@ -20,4 +20,4 @@ configuration {
   }
 }
 
-@theme "moria"
+@theme "teal"

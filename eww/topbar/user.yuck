@@ -1,0 +1,14 @@
+(defpoll logged-user :interval "86400s" "whoami")
+(deflisten profile-image :interval "86400s" "~/.face")
+
+(defwidget user-widget []
+    (box :class "container" :orientation "h" :space-evenly true :spacing 12
+        (box :class "metric-item" :space-evenly false :spacing 8 :halign "center"
+            (box :class "profile-icon" )
+            (label :text logged-user))))
+
+(defwindow user
+  :monitor 0
+  :geometry (geometry :x "10px" :y "10px" :width "5%" :height "30px" :anchor "top right")
+  :reserve (struts :distance "10px" :side "top")
+  (user-widget))

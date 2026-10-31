@@ -1,0 +1,61 @@
+(deflisten volume  :initial '{"level":0,"muted":false}' "sh scripts/volume.sh sink")
+(deflisten mic     :initial '{"level":0,"muted":false}' "sh scripts/volume.sh source")
+(deflisten devices :initial '{"sinks":[],"sources":[]}' "sh scripts/devices.sh")
+(deflisten brightness :initial "0" "sh ./scripts/brightness.sh listen")
+(defpoll cpu-usage :interval "2s" "awk '/^cpu / {usage=($2+$4)*100/($2+$4+$5); printf \"%.0f\", usage}' /proc/stat")
+(defpoll ram-usage :interval "5s" "free | grep Mem | awk '{print int($3/$2 * 100)}'")
+(defpoll vram-usage :interval "5s" "awk '{used=$1} END {getline total < \"/sys/class/drm/card0/device/mem_info_vram_total\"; print int(used/total*100)}' /sys/class/drm/card0/device/mem_info_vram_used 2>/dev/null || echo '0'")
+
+;; System usage
+(defwidget metrics-widget []
+    (box :class "container" :orientation "h" :space-evenly false :spacing 12 :halign "center"
+        (box :class "metric-item" :space-evenly false :spacing 4
+            (label :class "metric-icon" :text "\\uf4bc")
+            (label :text "${cpu-usage}%"))
+        (box :class "metric-item" :space-evenly false :spacing 4
+            (label :class "metric-icon" :text "\\uefc5")
+            (label :text "${ram-usage}%"))
+        (box :class "metric-item" :space-evenly false :spacing 4
+            (label :class "metric-icon" :text "\\ue266")
+            (label :text "${vram-usage}%"))
+))
+
+(defwidget slider-row [icon value onchange ?onclick]
+  (box :class "slider-row" :orientation "h" :space-evenly false :spacing 10
+    (button :class "slider-icon" :onclick {onclick ?: ""} icon)
+    (scale :class "slider" :hexpand true :min 0 :max 101
+           :value value :onchange onchange)
+    (label :class "slider-value" :text "${value}%")))
+
+(defwidget device-list [title items setcmd]
+  (box :class "section" :orientation "v" :space-evenly false :spacing 4
+    (label :class "section-title" :xalign 0 :text title)
+    (for dev in items
+      (button :class "device ${dev.default ? 'active' : ''}"
+              :onclick "${setcmd} '${dev.name}'"
+        (box :orientation "h" :space-evenly false :spacing 8
+          (label :class "device-check" :text {dev.default ? "" : " "})
+          (label :xalign 0 :limit-width 40 :text {dev.desc}))))))
+
+(defwidget control-center []
+  (box :class "container control-center" :orientation "v" :space-evenly false :spacing 14
+    (metrics-widget)
+    (slider-row :icon {volume.muted ? "" : ""}
+                :value {volume.level}
+                :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+                :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+    (slider-row :icon {mic.muted ? "" : ""}
+                :value {mic.level}
+                :onclick "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+                :onchange "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ {}%")
+    (slider-row :icon ""
+                :value brightness
+                :onchange "sh ./scripts/brightness.sh set {}")
+    (device-list :title "  Saída"   :items {devices.sinks}   :setcmd "pactl set-default-sink")
+    (device-list :title "  Entrada" :items {devices.sources} :setcmd "pactl set-default-source")))
+
+(defwindow control-center
+  :monitor 0
+  :geometry (geometry :x "0px" :y "50px" :width "380px" :height "0px" :anchor "top center")
+  :stacking "overlay"
+  (control-center))
